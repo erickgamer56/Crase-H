@@ -10,13 +10,14 @@
 </head>
 <body>
     <div class="init">
+        <input type="text" placeholder="Nome" id="nomes" autocomplete="off">
         <div class="flex">
             <h1 class="title">Crase Há ?</h1>
             <span class="start">Começar</span>
         </div>
         <div class="infos">
-            <span id="nome">Nome</span>
-            <span class="pontos">Acertos: 0</span>
+            <span class="max"><span id="nome">Nome</span></span>
+            <span class="pontos"  id="pontos">Acertos: 0</span>
             <span id="erros">Erros: 0</span>
         </div>
     </div>
@@ -25,10 +26,15 @@
         <div class="input">
             <h1 class="h1"></h1>
             <div class="junt">
-                <input type="text" class="inp" placeholder="Crase há ?">
+                <input type="text" class="inp" placeholder="reescreva a frase corretamente | Crase há ?">
                 <span class="btn">
                     <i class='bx bxs-chevrons-right'></i>
                 </span>
+            </div>
+            <div class="infos">
+                <span class="max"><span id="nome">Nome</span></span>
+                <span class="pontos" id="pontos">Acertos: 0</span>
+                <span id="erros">Erros: 0</span>
             </div>
         </div>
     </header>

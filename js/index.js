@@ -7,15 +7,10 @@ var frasesCorrect = [
     'O gerente dirigiu-se à sua sala',
     'Amores à vista',
     'Estava a dançar na pista',
-    'Recorreu à irmã e a ela se apegou como a uma tábua de salvação',
     'Submeteram o amor à provações difíceis',
-    'Vindos de locais distantes, todos chegaram à tempo a reunião',
-    'Cresce, às escondidas, o número de cidades recebendo imagens de televisão, ameaçadoras dos valores ético-culturais',
     'O autor se comparou a alguém que tem boa memória',
     'Os livros foram entregues a ele',
     'As pessoas aludem a uma causa',
-    'Refiro-me às atitudes de adultos que, na verdade, levam as moças à rebeldia insensata e a uma fuga insensata',
-    'Este resultado estatístico poderia pertencer a qualquer população carente',
     'À vista disso, devemos tomar sérias medidas',
     'Dia a dia a empresa foi crescendo',
     'Tudo correu às mil maravilhas',
@@ -27,9 +22,6 @@ var frasesCorrect = [
     'A empresa considerou a oferta inferior à outra',
     'Isto não seria útil a ela',
     'Sairemos às cinco da manhã',
-    'Tal lei se aplica, necessariamente, a mulheres de índole violenta',
-    'O bom atendimento às pessoas pobres deve ser prioridade da nova administração',
-    'Não assistiu a essa operação, mas à de seu irmão.',
     'Perdi uma caneta semelhante à sua',
     'O remédio devia ser ingerido gota a gota, e não de uma só vez',
     'O seu egoísmo só era comparável à sua feiur',
@@ -47,15 +39,10 @@ var frasesFalse = [
     'O gerente dirigiu-se ___ sua sala',
     'Amores ___ vista',
     'Estava ___ dançar na pista',
-    'Recorreu ___ irmã e ___ ela se apegou como ___ uma tábua de salvação',
     'Submeteram o amor ___ provações difíceis',
-    'Vindos de locais distantes, todos chegaram ___ tempo a reunião',
-    'Cresce, ___ escondidas, o número de cidades recebendo imagens de televisão, ameaçadoras dos valores ético-culturais',
     'O autor se comparou ___ alguém que tem boa memória',
     'Os livros foram entregues ___ ele',
     'As pessoas aludem ___ uma causa',
-    'Refiro-me ___ atitudes de adultos que, na verdade, levam as moças ___ rebeldia insensata e ___ uma fuga insensata',
-    'Este resultado estatístico poderia pertencer ___ qualquer população carente',
     '___ vista disso, devemos tomar sérias medidas',
     'Dia ___ dia a empresa foi crescendo',
     'Tudo correu ___ mil maravilhas',
@@ -67,9 +54,6 @@ var frasesFalse = [
     'A empresa considerou a oferta inferior ___ outra',
     'Isto não seria útil ___ ela',
     'Sairemos ___ cinco da manhã',
-    'Tal lei se aplica, necessariamente, ___ mulheres de índole violenta',
-    'O bom atendimento ___ pessoas pobres deve ser prioridade da nova administração',
-    'Não assistiu ___ essa operação, mas ___ de seu irmão',
     'Perdi uma caneta semelhante ___ sua',
     'O remédio devia ser ingerido gota ___ gota, e não de uma só vez',
     'O seu egoísmo só era comparável ___ sua feiura',
@@ -79,9 +63,37 @@ var frasesFalse = [
     'Voltou ___ casa paterna',
 
 ]
-acertos = 0
+window.addEventListener("load", ()=>{
+    
+    var nome = document.querySelectorAll("#nome")
+    nome.forEach(element2 => {
+        element2.innerHTML=localStorage.getItem("nome")
+    });
+    var nomevalue = document.getElementById("nomes").value =localStorage.getItem("nome")
+    var pontos = document.querySelectorAll("#pontos")
+    pontos.forEach(element2 => {
+        element2.innerHTML=localStorage.getItem("acertos")
+    });
+    document.getElementById("pontos").innerHTML = "Acertos: "+localStorage.getItem("acertos")
+})
 let start = document.querySelector(".start")
 start.addEventListener("click" , () =>{
+
+    localStorage.setItem("acertos", 0)
+    var pontos = document.querySelectorAll("#pontos")
+    pontos.forEach(element2 => {
+        element2.innerHTML="Acertos: "+localStorage.getItem("acertos")
+    });
+
+    var nomevalue = document.getElementById("nomes")
+    var valueofnome = nomevalue.value
+    localStorage.setItem("nome", valueofnome)
+
+    var nome = document.querySelectorAll("#nome")
+    nome.forEach(element2 => {
+        element2.innerHTML=localStorage.getItem("nome")
+    });
+
     var vida = 100
     document.querySelector(".life").style.width=vida+'%'
     document.querySelector(".init").classList.add("jogar")
@@ -105,8 +117,20 @@ start.addEventListener("click" , () =>{
         if (quant == 0){
             
         }
-        if (frasesCorrect.includes(value)){
-            acertos++
+        if (frasesCorrect.includes(value) && value == frasesCorrect[ale]){
+
+            if (localStorage.getItem("acertos")){
+                var local = localStorage.getItem("acertos")
+                local = parseInt(localStorage.getItem("acertos")) + 1
+                localStorage.setItem("acertos", local)
+                var pontos = document.querySelectorAll("#pontos")
+                pontos.forEach(element2 => {
+                    element2.innerHTML="Acertos: "+localStorage.getItem("acertos")
+                });
+            }else{
+                localStorage.setItem("acertos", 1)
+            }
+
             let dellF = frasesFalse.splice(ale , 1)
             console.log(dellF)
             let dellC = frasesCorrect.splice(ale , 1)
@@ -125,7 +149,9 @@ start.addEventListener("click" , () =>{
                 var primeiraFrase = frasesFalse[ale]
                 var h1 = document.querySelector(".h1")
                 h1.innerHTML=primeiraFrase
+                document.querySelector(".inp").value=primeiraFrase
             }, 100);
+
 
         }else{
             var header = document.querySelector("header")
