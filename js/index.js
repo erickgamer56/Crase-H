@@ -70,11 +70,21 @@ window.addEventListener("load", ()=>{
         element2.innerHTML=localStorage.getItem("nome")
     });
     var nomevalue = document.getElementById("nomes").value =localStorage.getItem("nome")
+    if (!localStorage.getItem("nome")){
+        localStorage.setItem("nome" , "Nome")
+    }
+    if (!localStorage.getItem("acertos")){
+        localStorage.setItem("acertos" , 0)
+    }
     var pontos = document.querySelectorAll("#pontos")
     pontos.forEach(element2 => {
         element2.innerHTML=localStorage.getItem("acertos")
     });
     document.getElementById("pontos").innerHTML = "Acertos: "+localStorage.getItem("acertos")
+    var erros = document.querySelectorAll("#erros")
+    erros.forEach(element2 => {
+        element2.innerHTML= "Erros: "+localStorage.getItem("erros")
+    });
 })
 let start = document.querySelector(".start")
 start.addEventListener("click" , () =>{
@@ -160,6 +170,18 @@ start.addEventListener("click" , () =>{
                 header.style.backgroundColor='whitesmoke'
             }, 500);
             vida = vida - 25
+
+            if (localStorage.getItem("erros")){
+                var local = localStorage.getItem("erros")
+                local = parseInt(localStorage.getItem("erros")) + 1
+                localStorage.setItem("erros", local)
+                var pontos = document.querySelectorAll("#erros")
+                pontos.forEach(element2 => {
+                    element2.innerHTML="Erros: "+localStorage.getItem("erros")
+                });
+            }else{
+                localStorage.setItem("erros", 1)
+            }
         }
         document.querySelector(".life").style.width=vida+'%'
     })
