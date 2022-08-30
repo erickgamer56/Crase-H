@@ -76,6 +76,9 @@ window.addEventListener("load", ()=>{
     if (!localStorage.getItem("acertos")){
         localStorage.setItem("acertos" , 0)
     }
+    if (!localStorage.getItem("erros")){
+        localStorage.setItem("erros" , 0)
+    }
     var pontos = document.querySelectorAll("#pontos")
     pontos.forEach(element2 => {
         element2.innerHTML=localStorage.getItem("acertos")
@@ -113,34 +116,22 @@ start.addEventListener("click" , () =>{
     var ale = aleatorio(quant)
     
     var primeiraFrase = frasesFalse[ale]
+    var segundaFrase = frasesCorrect[ale]
     var h1 = document.querySelector(".h1")
     h1.innerHTML=primeiraFrase
-    var btn = document.querySelector(".btn")
-    btn.addEventListener("click", ()=>{
-        var inp = document.querySelector(".inp")
-        var value = inp.value
-        if (vida == 25){
-            setTimeout(() => {
-                window.location.href='index.html'
-            }, 500);
+    var sim = document.querySelector("#sim")
+    sim.addEventListener("click" , function(){
+        if (segundaFrase.includes('às')){
+            primeiraFrase = primeiraFrase.replace('___', 'às')
         }
-        if (quant == 0){
-            
+        if (segundaFrase.includes('à')){
+            primeiraFrase = primeiraFrase.replace('___', 'à')
+
         }
-        if (frasesCorrect.includes(value) && value == frasesCorrect[ale]){
-
-            if (localStorage.getItem("acertos")){
-                var local = localStorage.getItem("acertos")
-                local = parseInt(localStorage.getItem("acertos")) + 1
-                localStorage.setItem("acertos", local)
-                var pontos = document.querySelectorAll("#pontos")
-                pontos.forEach(element2 => {
-                    element2.innerHTML="Acertos: "+localStorage.getItem("acertos")
-                });
-            }else{
-                localStorage.setItem("acertos", 1)
-            }
-
+        if (segundaFrase.includes('À')){
+            primeiraFrase = primeiraFrase.replace('___', 'À')
+        }
+        if (primeiraFrase == segundaFrase){
             let dellF = frasesFalse.splice(ale , 1)
             console.log(dellF)
             let dellC = frasesCorrect.splice(ale , 1)
@@ -151,17 +142,74 @@ start.addEventListener("click" , () =>{
             setTimeout(() => {
                 header.style.backgroundColor='whitesmoke'
             }, 500);
+            if (vida == 0){
+                setTimeout(() => {
+                    window.location.href='index.html'
+                }, 500);
+            }
             
-            setTimeout(() => {
-                var quant = frasesFalse.length
-                var aleatorio = (num) => Math.floor(Math.random() * num)
-                ale = aleatorio(quant)
-                var primeiraFrase = frasesFalse[ale]
-                var h1 = document.querySelector(".h1")
-                h1.innerHTML=primeiraFrase
-                document.querySelector(".inp").value=primeiraFrase
-            }, 100);
+            var aleatorio = (num) => Math.floor(Math.random() * num)
+            var ale = aleatorio(quant)
 
+            primeiraFrase = frasesFalse[ale]
+            segundaFrase = frasesCorrect[ale]
+            var h1 = document.querySelector(".h1")
+            h1.innerHTML=primeiraFrase
+
+
+        }else{
+
+            var header = document.querySelector("header")
+            header.style.backgroundColor='rgb(228, 57, 57)'
+            setTimeout(() => {
+                header.style.backgroundColor='whitesmoke'
+            }, 500);
+            vida = vida - 25
+            document.querySelector(".life").style.width=vida+'%'
+            if (vida == 0){
+                setTimeout(() => {
+                    window.location.href='index.html'
+                }, 500);
+            }
+    
+        }
+
+    })
+    var nao = document.querySelector("#nao")
+    nao.addEventListener("click" , function(){
+        
+        if (segundaFrase.includes('as')){
+            primeiraFrase = primeiraFrase.replace('___', 'as')
+        }
+        if (segundaFrase.includes('a')){
+            primeiraFrase = primeiraFrase.replace('___', 'a')
+        }
+        if (segundaFrase.includes('A')){
+            primeiraFrase = primeiraFrase.replace('___', 'A')
+        }
+        if (primeiraFrase == segundaFrase && primeiraFrase.includes(frasesCorrect)){
+            let dellF = frasesFalse.splice(ale , 1)
+            console.log(dellF)
+            let dellC = frasesCorrect.splice(ale , 1)
+            console.log(dellC)
+
+            var header = document.querySelector("header")
+            header.style.backgroundColor='#04AA6D'
+            setTimeout(() => {
+                header.style.backgroundColor='whitesmoke'
+            }, 500);
+            if (vida == 0){
+                setTimeout(() => {
+                    window.location.href='index.html'
+                }, 500);
+            }
+            var aleatorio = (num) => Math.floor(Math.random() * num)
+            var ale = aleatorio(quant)
+            primeiraFrase = frasesFalse[ale]
+            segundaFrase = frasesCorrect[ale]
+            var h1 = document.querySelector(".h1")
+            h1.innerHTML=primeiraFrase
+    
 
         }else{
             var header = document.querySelector("header")
@@ -170,21 +218,14 @@ start.addEventListener("click" , () =>{
                 header.style.backgroundColor='whitesmoke'
             }, 500);
             vida = vida - 25
-
-            if (localStorage.getItem("erros")){
-                var local = localStorage.getItem("erros")
-                local = parseInt(localStorage.getItem("erros")) + 1
-                localStorage.setItem("erros", local)
-                var pontos = document.querySelectorAll("#erros")
-                pontos.forEach(element2 => {
-                    element2.innerHTML="Erros: "+localStorage.getItem("erros")
-                });
-            }else{
-                localStorage.setItem("erros", 1)
+            document.querySelector(".life").style.width=vida+'%'
+            if (vida == 0){
+                setTimeout(() => {
+                    window.location.href='index.html'
+                }, 500);
             }
-        }
-        document.querySelector(".life").style.width=vida+'%'
-    })
-
     
+        }
+
+    })
 })
