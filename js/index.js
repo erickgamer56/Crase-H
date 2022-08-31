@@ -1,34 +1,34 @@
 var frasesCorrect = [
-    'Pintura a óleo',
-    'Vou à escola',
-    'Irei amanhã à Rádio Interativa',
-    'Entrega a domicílio',
-    'Irei às sete horas amanhã',
-    'O gerente dirigiu-se à sua sala',
-    'Amores à vista',
-    'Estava a dançar na pista',
-    'Submeteram o amor à provações difíceis',
-    'O autor se comparou a alguém que tem boa memória',
-    'Os livros foram entregues a ele',
-    'As pessoas aludem a uma causa',
-    'À vista disso, devemos tomar sérias medidas',
-    'Dia a dia a empresa foi crescendo',
-    'Tudo correu às mil maravilhas',
-    'Rente à parede',
-    'As lágrimas caíam uma a uma de seus olhos',
-    'Ele está propenso a deixar o cargo',
-    'Essa proposta convém a todos',
-    'Não vou aderir a modismos passageiros',
-    'A empresa considerou a oferta inferior à outra',
-    'Isto não seria útil a ela',
-    'Sairemos às cinco da manhã',
-    'Perdi uma caneta semelhante à sua',
-    'O remédio devia ser ingerido gota a gota, e não de uma só vez',
-    'O seu egoísmo só era comparável à sua feiur',
-    'Quem se vir em apuros, deve recorrer à justiça',
-    'Não pôde entregar-se às suas ilusões',
-    'Fomos a uma aldeia',
-    'Voltou à casa paterna'
+    'Pintura .a óleo',
+    'Vou .à escola',
+    'Irei amanhã .à Rádio Interativa',
+    'Entrega .a domicílio',
+    'Irei .às sete horas amanhã',
+    'O gerente dirigiu-se .à sua sala',
+    'Amores .à vista',
+    'Estava .a dançar na pista',
+    'Submeteram o amor .à provações difíceis',
+    'O autor se comparou .a alguém que tem boa memória',
+    'Os livros foram entregues .a ele',
+    'As pessoas aludem .a uma causa',
+    '.À vista disso, devemos tomar sérias medidas',
+    'Dia a dia .a empresa foi crescendo',
+    'Tudo correu .às mil maravilhas',
+    'Rente .à parede',
+    'As lágrimas caíam uma .a uma de seus olhos',
+    'Ele está propenso .a deixar o cargo',
+    'Essa proposta convém .a todos',
+    'Não vou aderir .a modismos passageiros',
+    'A empresa considerou a oferta inferior .à outra',
+    'Isto não seria útil .a ela',
+    'Sairemos .às cinco da manhã',
+    'Perdi uma caneta semelhante .à sua',
+    'O remédio devia ser ingerido gota .a gota, e não de uma só vez',
+    'O seu egoísmo só era comparável .à sua feiur',
+    'Quem se vir em apuros, deve recorrer .à justiça',
+    'Não pôde entregar-se .às suas ilusões',
+    'Fomos .a uma aldeia',
+    'Voltou .à casa paterna'
 ];
 var frasesFalse = [
     'Pintura ___ óleo',
@@ -69,6 +69,7 @@ window.addEventListener("load", ()=>{
     nome.forEach(element2 => {
         element2.innerHTML=localStorage.getItem("nome")
     });
+
     var nomevalue = document.getElementById("nomes").value =localStorage.getItem("nome")
     if (!localStorage.getItem("nome")){
         localStorage.setItem("nome" , "Nome")
@@ -79,19 +80,18 @@ window.addEventListener("load", ()=>{
     if (!localStorage.getItem("erros")){
         localStorage.setItem("erros" , 0)
     }
-    var pontos = document.querySelectorAll("#pontos")
-    pontos.forEach(element2 => {
-        element2.innerHTML=localStorage.getItem("acertos")
-    });
+    var pontos = document.querySelector("#pontos")
+    pontos.innerHTML=localStorage.getItem("acertos")
     document.getElementById("pontos").innerHTML = "Acertos: "+localStorage.getItem("acertos")
-    var erros = document.querySelectorAll("#erros")
-    erros.forEach(element2 => {
-        element2.innerHTML= "Erros: "+localStorage.getItem("erros")
-    });
+
+    var erros = document.querySelector("#erros")
+    erros.innerHTML= "Erros: "+localStorage.getItem("erros")
 })
+
 let start = document.querySelector(".start")
 start.addEventListener("click" , () =>{
-
+    var erros2 = document.querySelector("#erros2")
+    erros2.innerHTML= "Erros: "+localStorage.getItem("erros")
     localStorage.setItem("acertos", 0)
     var pontos = document.querySelectorAll("#pontos")
     pontos.forEach(element2 => {
@@ -108,6 +108,8 @@ start.addEventListener("click" , () =>{
     });
 
     var vida = 100
+
+
     document.querySelector(".life").style.width=vida+'%'
     document.querySelector(".init").classList.add("jogar")
 
@@ -117,47 +119,49 @@ start.addEventListener("click" , () =>{
     
     var primeiraFrase = frasesFalse[ale]
     var segundaFrase = frasesCorrect[ale]
+    alert(segundaFrase)
     var h1 = document.querySelector(".h1")
     h1.innerHTML=primeiraFrase
     var sim = document.querySelector("#sim")
     sim.addEventListener("click" , function(){
-        if (segundaFrase.includes('às')){
-            primeiraFrase = primeiraFrase.replace('___', 'às')
+        if (vida == 25){
+            setTimeout(() => {
+                window.location.href='index.html'
+            }, 500);
         }
-        if (segundaFrase.includes('à')){
-            primeiraFrase = primeiraFrase.replace('___', 'à')
-
-        }
-        if (segundaFrase.includes('À')){
-            primeiraFrase = primeiraFrase.replace('___', 'À')
-        }
-        if (primeiraFrase == segundaFrase){
+        if (segundaFrase.includes('.às') || segundaFrase.includes('.à') || segundaFrase.includes('.À')){
             let dellF = frasesFalse.splice(ale , 1)
             console.log(dellF)
             let dellC = frasesCorrect.splice(ale , 1)
             console.log(dellC)
+
+
+            var somou = parseInt(localStorage.getItem("acertos") ) + 1
+            localStorage.setItem("acertos" , somou)
+            var pontos2 = document.querySelector("#pontos2")
+            pontos2.innerHTML="Acertos: "+localStorage.getItem("acertos")
 
             var header = document.querySelector("header")
             header.style.backgroundColor='#04AA6D'
             setTimeout(() => {
                 header.style.backgroundColor='whitesmoke'
             }, 500);
-            if (vida == 0){
-                setTimeout(() => {
-                    window.location.href='index.html'
-                }, 500);
-            }
-            
-            var aleatorio = (num) => Math.floor(Math.random() * num)
-            var ale = aleatorio(quant)
 
-            primeiraFrase = frasesFalse[ale]
-            segundaFrase = frasesCorrect[ale]
-            var h1 = document.querySelector(".h1")
-            h1.innerHTML=primeiraFrase
-
-
+            setTimeout(() => {
+                var quant = frasesFalse.length
+                var aleatorio = (num) => Math.floor(Math.random() * num)
+                ale = aleatorio(quant)
+                primeiraFrase = frasesFalse[ale]
+                segundaFrase = frasesCorrect[ale]
+                var h1 = document.querySelector(".h1")
+                h1.innerHTML=primeiraFrase
+                alert(segundaFrase)
+            }, 100);
         }else{
+            var somou3 = parseInt(localStorage.getItem("erros") ) + 1
+            localStorage.setItem("erros" , somou3)
+            var pontos3 = document.querySelector("#erros2")
+            pontos3.innerHTML="Erros: " +localStorage.getItem("erros")
 
             var header = document.querySelector("header")
             header.style.backgroundColor='rgb(228, 57, 57)'
@@ -166,28 +170,17 @@ start.addEventListener("click" , () =>{
             }, 500);
             vida = vida - 25
             document.querySelector(".life").style.width=vida+'%'
-            if (vida == 0){
-                setTimeout(() => {
-                    window.location.href='index.html'
-                }, 500);
-            }
-    
         }
 
     })
     var nao = document.querySelector("#nao")
     nao.addEventListener("click" , function(){
-        
-        if (segundaFrase.includes('as')){
-            primeiraFrase = primeiraFrase.replace('___', 'as')
+        if (vida == 25){
+            setTimeout(() => {
+                window.location.href='index.html'
+            }, 500);
         }
-        if (segundaFrase.includes('a')){
-            primeiraFrase = primeiraFrase.replace('___', 'a')
-        }
-        if (segundaFrase.includes('A')){
-            primeiraFrase = primeiraFrase.replace('___', 'A')
-        }
-        if (primeiraFrase == segundaFrase && primeiraFrase.includes(frasesCorrect)){
+        if (segundaFrase.includes('.as') || segundaFrase.includes('.a') || segundaFrase.includes('.A')){
             let dellF = frasesFalse.splice(ale , 1)
             console.log(dellF)
             let dellC = frasesCorrect.splice(ale , 1)
@@ -198,33 +191,37 @@ start.addEventListener("click" , () =>{
             setTimeout(() => {
                 header.style.backgroundColor='whitesmoke'
             }, 500);
-            if (vida == 0){
-                setTimeout(() => {
-                    window.location.href='index.html'
-                }, 500);
-            }
-            var aleatorio = (num) => Math.floor(Math.random() * num)
-            var ale = aleatorio(quant)
-            primeiraFrase = frasesFalse[ale]
-            segundaFrase = frasesCorrect[ale]
-            var h1 = document.querySelector(".h1")
-            h1.innerHTML=primeiraFrase
-    
 
+            var somou = parseInt(localStorage.getItem("acertos") ) + 1
+            localStorage.setItem("acertos" , somou)
+            var pontos2 = document.querySelector("#pontos2")
+            pontos2.innerHTML="Acertos: "+localStorage.getItem("acertos")
+
+            setTimeout(() => {
+                var quant = frasesFalse.length
+                var aleatorio = (num) => Math.floor(Math.random() * num)
+                ale = aleatorio(quant)
+                primeiraFrase = frasesFalse[ale]
+                segundaFrase = frasesCorrect[ale]
+                var h1 = document.querySelector(".h1")
+                h1.innerHTML=primeiraFrase
+                alert(segundaFrase)
+            }, 100);
         }else{
+            var somou3 = parseInt(localStorage.getItem("erros") ) + 1
+            localStorage.setItem("erros" , somou3)
+            var pontos3 = document.querySelector("#erros2")
+            pontos3.innerHTML="Erros: " +localStorage.getItem("erros")
+
             var header = document.querySelector("header")
             header.style.backgroundColor='rgb(228, 57, 57)'
             setTimeout(() => {
                 header.style.backgroundColor='whitesmoke'
             }, 500);
             vida = vida - 25
+
+
             document.querySelector(".life").style.width=vida+'%'
-            if (vida == 0){
-                setTimeout(() => {
-                    window.location.href='index.html'
-                }, 500);
-            }
-    
         }
 
     })
