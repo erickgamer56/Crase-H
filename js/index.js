@@ -119,7 +119,6 @@ start.addEventListener("click" , () =>{
     
     var primeiraFrase = frasesFalse[ale]
     var segundaFrase = frasesCorrect[ale]
-    alert(segundaFrase)
     var h1 = document.querySelector(".h1")
     h1.innerHTML=primeiraFrase
     var sim = document.querySelector("#sim")
@@ -155,7 +154,6 @@ start.addEventListener("click" , () =>{
                 segundaFrase = frasesCorrect[ale]
                 var h1 = document.querySelector(".h1")
                 h1.innerHTML=primeiraFrase
-                alert(segundaFrase)
             }, 100);
         }else{
             var somou3 = parseInt(localStorage.getItem("erros") ) + 1
@@ -205,7 +203,6 @@ start.addEventListener("click" , () =>{
                 segundaFrase = frasesCorrect[ale]
                 var h1 = document.querySelector(".h1")
                 h1.innerHTML=primeiraFrase
-                alert(segundaFrase)
             }, 100);
         }else{
             var somou3 = parseInt(localStorage.getItem("erros") ) + 1
